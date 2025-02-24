@@ -19,6 +19,6 @@ jobs:
           curl -X POST "https://cloud.appwrite.io/v1/storage/buckets/Testapk/files" \
             -H "X-Appwrite-Project: ${{ secrets.APPWRITE_PROJECT_ID }}" \
             -H "X-Appwrite-Key: ${{ secrets.APPWRITE_API_KEY }}" \
-            -H "X-Appwrite-File-Id: testapk" \            
+            -F "fileId=testapk" \
             -H "X-Appwrite-Content-Type: application/vnd.android.package-archive" \
             -F "file=@test.apk;type=application/vnd.android.package-archive"
