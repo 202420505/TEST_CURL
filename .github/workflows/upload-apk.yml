@@ -1,0 +1,23 @@
+name: Upload APK to Appwrite
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  upload_apk:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Upload APK to Appwrite with Secret File ID
+        run: |
+          curl -X POST "https://cloud.appwrite.io/v1/storage/buckets/Testapk/files" \
+            -H "X-Appwrite-Project: ${{ secrets.APPWRITE_PROJECT_ID }}" \
+            -H "X-Appwrite-Key: ${{ secrets.APPWRITE_API_KEY }}" \
+            -F "fileId=testapk" \
+            -F "file=@test.apk"
