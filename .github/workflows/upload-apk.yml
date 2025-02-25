@@ -27,4 +27,4 @@ jobs:
           echo "APPWRITE_KEY=${{ secrets.APPWRITE_API_KEY }}" >> $GITHUB_ENV
 
       - name: Upload APK to Appwrite
-        run: appwrite storage create-file --bucketId "Testapk" --fileId "testapk" --file "test.apk"
+        run: appwrite storage create-file --bucket-id "treekiosk" --file-id "testapk" --file "test.apk"
