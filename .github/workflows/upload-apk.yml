@@ -20,12 +20,8 @@ jobs:
       - name: Add Appwrite to PATH
         run: echo "$(npm root -g)/.bin" >> $GITHUB_PATH
 
-      - name: Set up Appwrite Client
-        run: |
-          appwrite client set-endpoint --value "https://cloud.appwrite.io/v1"
-          appwrite client set-project --value "${{ secrets.APPWRITE_PROJECT_ID }}"
-          appwrite client set-key --value "${{ secrets.APPWRITE_API_KEY }}"
-          appwrite client set-self-signed --value "true"
+      - name: Set Appwrite Project
+        run: appwrite client set-project "${{ secrets.APPWRITE_PROJECT_ID }}"
 
       - name: Upload APK to Appwrite
         run: appwrite storage create-file --bucket-id "Testapk" --file-id "testapk" --file "test.apk"
