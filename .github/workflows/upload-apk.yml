@@ -21,7 +21,12 @@ jobs:
         run: echo "$(npm root -g)/.bin" >> $GITHUB_PATH
 
       - name: Set Appwrite Project
-        run: appwrite client set-project "${{ secrets.APPWRITE_PROJECT_ID }}"
+        run: |
+          appwrite client set-endpoint "${{ secrets.APPWRITE_ENDPOINT }}"
+          appwrite client set-key "${{ secrets.APPWRITE_API_KEY }}"
+          appwrite client set-project "${{ secrets.APPWRITE_PROJECT_ID }}"
+          appwrite init project --projectId "${{ secrets.APPWRITE_PROJECT_ID }}"
+
 
       - name: Upload APK to Appwrite
         run: appwrite storage create-file --bucket-id "Testapk" --file-id "testapk" --file "test.apk"
