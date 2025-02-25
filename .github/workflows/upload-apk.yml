@@ -22,10 +22,10 @@ jobs:
 
       - name: Set Appwrite Project
         run: |
-          appwrite client set-endpoint "${{ secrets.APPWRITE_ENDPOINT }}"
-          appwrite client set-key "${{ secrets.APPWRITE_API_KEY }}"
-          appwrite client set-project "${{ secrets.APPWRITE_PROJECT_ID }}"
-          appwrite init project --projectId "${{ secrets.APPWRITE_PROJECT_ID }}"
+          appwrite client --endpoint "${{ secrets.APPWRITE_ENDPOINT }}" \
+                          --project-id "${{ secrets.APPWRITE_PROJECT_ID }}" \
+                          --key "${{ secrets.APPWRITE_API_KEY }}"
+
 
 
       - name: Upload APK to Appwrite
