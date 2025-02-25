@@ -14,11 +14,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Upload APK to Appwrite with Secret File ID
-        run: |
-          curl -X POST "https://cloud.appwrite.io/v1/storage/buckets/Testapk/files" \
-            -H "X-Appwrite-Project: ${{ secrets.APPWRITE_PROJECT_ID }}" \
-            -H "X-Appwrite-Key: ${{ secrets.APPWRITE_API_KEY }}" \
-            -F "fileId=testapk" \
-            -H "X-Appwrite-Content-Type: application/vnd.android.package-archive" \
-            -F "file=@test.apk;type=application/vnd.android.package-archive"
+      - name: Install Appwrite CLI
+        run: npm install -g appwrite
+
+      - name: Set up Appwrite CLI authentication
+        run: appwrite client --endpoint "https://cloud.appwrite.io/v1" --project "${{ secrets.APPWRITE_PROJECT_ID }}" --key "${{ secrets.APPWRITE_API_KEY }}"
+
+      - name: Upload APK to Appwrite
+        run: appwrite storage createFile --bucketId "Testapk" --fileId "testapk" --file "test.apk"
