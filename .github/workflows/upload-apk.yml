@@ -1,39 +1,25 @@
-name: Upload APK to Appwrite
+name: Upload test.apk to Appwrite
 
 on:
   push:
     branches:
-      - main
-  workflow_dispatch:
+      - main  # 또는 원하는 브랜치
 
 jobs:
-  upload_apk:
+  upload-apk:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
-      - name: Verify APK file
+      - name: Install Appwrite CLI
         run: |
-          ls -lh test.apk
-          file --mime-type test.apk
-          md5sum test.apk
+          curl -sL https://appwrite.io/cli/install.sh | bash
+          appwrite login --key ${{ secrets.APPWRITE_API_KEY }}
 
-      - name: Upload APK to Appwrite
+      - name: Upload test.apk to Appwrite
         run: |
-          curl -X POST "https://cloud.appwrite.io/v1/storage/buckets/Testapk/files" \
-            -H "Content-Type: multipart/form-data" \
-            -H "X-Appwrite-Project: ${{ secrets.APPWRITE_PROJECT_ID }}" \
-            -H "X-Appwrite-Key: ${{ secrets.APPWRITE_API_KEY }}" \
-            -F "file=@test.apk;type=application/vnd.android.package-archive" \
-            -F "fileId=testapk-$(date +%s)"
-
-      - name: Debug APK Upload
-        run: |
-          curl -v -X POST "https://cloud.appwrite.io/v1/storage/buckets/Testapk/files" \
-            -H "Content-Type: multipart/form-data" \
-            -H "X-Appwrite-Project: ${{ secrets.APPWRITE_PROJECT_ID }}" \
-            -H "X-Appwrite-Key: ${{ secrets.APPWRITE_API_KEY }}" \
-            -F "file=@test.apk;type=application/vnd.android.package-archive" \
-            -F "fileId=testapk-$(date +%s)"
+          appwrite storage createFile \
+            --bucketId ${{ secrets.APPWRITE_BUCKET_ID }} \
+            --fileId test-apk \
+            --file ./test.apk
