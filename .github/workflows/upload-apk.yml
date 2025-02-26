@@ -16,20 +16,14 @@ jobs:
         run: |
           curl -sL https://appwrite.io/cli/install.sh | bash
 
-      - name: Set up Appwrite API environment
-        env:
-          APPWRITE_API_KEY: ${{ secrets.APPWRITE_API_KEY }}
-          APPWRITE_ENDPOINT: ${{ secrets.APPWRITE_ENDPOINT }}
-          APPWRITE_PROJECT_ID: ${{ secrets.APPWRITE_PROJECT_ID }}
+      - name: Set up Appwrite Client
         run: |
-          # Appwrite CLI will use the environment variables to authenticate
-          echo "Appwrite environment set up successfully."
+          appwrite client \
+            --endpoint https://cloud.appwrite.io/v1 \
+            --project-id ${{ secrets.APPWRITE_PROJECT_ID }} \
+            --key ${{ secrets.APPWRITE_API_KEY }}
 
       - name: Upload test.apk to Appwrite
-        env:
-          APPWRITE_API_KEY: ${{ secrets.APPWRITE_API_KEY }}
-          APPWRITE_PROJECT_ID: ${{ secrets.APPWRITE_PROJECT_ID }}
-          APPWRITE_ENDPOINT: ${{ secrets.APPWRITE_ENDPOINT }}
         run: |
           appwrite storage create-file \
             --bucket-id ${{ secrets.APPWRITE_BUCKET_ID }} \
