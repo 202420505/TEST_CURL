@@ -26,4 +26,5 @@ jobs:
             -H "Content-Type: multipart/form-data" \
             -H "X-Appwrite-Project: ${{ secrets.APPWRITE_PROJECT_ID }}" \
             -H "X-Appwrite-Key: ${{ secrets.APPWRITE_API_KEY }}" \
-            -F "file=@test.apk"
+            -F "file=@test.apk" \
+            -F "fileId=testapk-$(date +%s)"
