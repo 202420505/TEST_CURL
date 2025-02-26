@@ -22,7 +22,7 @@ jobs:
 
       - name: Upload APK to Appwrite
         run: |
-          curl -X POST "https://cloud.appwrite.io/v1/storage/buckets/Testapk/files" \
+          curl -X POST "https://cloud.appwrite.io/v1/storage/buckets/testapk/files" \
             -H "Content-Type: multipart/form-data" \
             -H "X-Appwrite-Project: ${{ secrets.APPWRITE_PROJECT_ID }}" \
             -H "X-Appwrite-Key: ${{ secrets.APPWRITE_API_KEY }}" \
