@@ -14,19 +14,16 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install Appwrite CLI
-        run: npm install -g appwrite-cli
-
-      - name: Add Appwrite to PATH
-        run: echo "$(npm root -g)/.bin" >> $GITHUB_PATH
-
-      - name: Set Appwrite Project
+      - name: Verify APK file
         run: |
-          appwrite client --endpoint "${{ secrets.APPWRITE_ENDPOINT }}" \
-                          --project-id "${{ secrets.APPWRITE_PROJECT_ID }}" \
-                          --key "${{ secrets.APPWRITE_API_KEY }}"
-
-
+          ls -lh test.apk
+          file test.apk
+          md5sum test.apk
 
       - name: Upload APK to Appwrite
-        run: appwrite storage create-file --bucket-id "Testapk" --file-id "testapk" --file "test.apk"
+        run: |
+          curl -X POST "https://cloud.appwrite.io/v1/storage/buckets/Testapk/files" \
+            -H "Content-Type: multipart/form-data" \
+            -H "X-Appwrite-Project: ${{ secrets.APPWRITE_PROJECT_ID }}" \
+            -H "X-Appwrite-Key: ${{ secrets.APPWRITE_API_KEY }}" \
+            -F "file=@test.apk"
