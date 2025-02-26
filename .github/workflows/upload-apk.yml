@@ -23,6 +23,7 @@ jobs:
           APPWRITE_API_KEY: ${{ secrets.APPWRITE_API_KEY }}
         run: |
           appwrite storage create-file \
+            --project-id ${{ secrets.APPWRITE_PROJECT_ID }} \
             --bucket-id ${{ secrets.APPWRITE_BUCKET_ID }} \
             --file-id test-apk \
             --file ./test.apk
