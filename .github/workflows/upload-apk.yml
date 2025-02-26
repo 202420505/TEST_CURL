@@ -26,6 +26,6 @@ jobs:
       - name: Upload test.apk to Appwrite
         run: |
           appwrite storage create-file \
-            --bucketId ${{ secrets.APPWRITE_BUCKET_ID }} \
-            --fileId test-apk \
+            --bucket-id ${{ secrets.APPWRITE_BUCKET_ID }} \
+            --file-id test-apk \
             --file ./test.apk
