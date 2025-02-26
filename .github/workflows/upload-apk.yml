@@ -21,5 +21,4 @@ jobs:
           appwrite storage create-file \
             --bucket-id ${{ secrets.APPWRITE_BUCKET_ID }} \
             --file-id test-apk \
-            --file ./test.apk \
-            --content-type application/vnd.android.package-archive
+            --file ./test.apk 
