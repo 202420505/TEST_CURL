@@ -16,16 +16,10 @@ jobs:
         run: |
           curl -sL https://appwrite.io/cli/install.sh | bash
 
-      - name: Set up Appwrite Client
-        run: |
-          appwrite client \
-            --endpoint https://cloud.appwrite.io/v1 \
-            --project-id ${{ secrets.APPWRITE_PROJECT_ID }} \
-            --key ${{ secrets.APPWRITE_API_KEY }}
-
       - name: Upload test.apk to Appwrite
         run: |
           appwrite storage create-file \
             --bucket-id ${{ secrets.APPWRITE_BUCKET_ID }} \
             --file-id test-apk \
-            --file ./test.apk
+            --file ./test.apk \
+            --content-type application/vnd.android.package-archive
